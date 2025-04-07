@@ -26,7 +26,7 @@ defmodule Neko.MixProject do
       {:plug, "~> 1.14"},
       {:plug_cowboy, "~> 2.6"},
       {:ecto_sqlite3, "~> 0.10"},
-      {:jason, "~> 1.4"} 
+      {:jason, "~> 1.4"}
     ]
   end
 end

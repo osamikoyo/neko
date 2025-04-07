@@ -1,13 +1,12 @@
 defmodule Neko.Chans.Chan do
   use Ecto.Schema
 
-  schema "users" do
-    field :username, :string
-    field :email, :string
-    field :password, :string
-    field :foots, :integer
+  schema "chans" do
+    field(:foots, :string)
+    field(:description, :string)
+    field(:archive_name, :string)
+    has_many(:user, Neko.Users.User)
 
     timestamps()
   end
-
 end
