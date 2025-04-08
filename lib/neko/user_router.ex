@@ -1,5 +1,6 @@
 defmodule Neko.UserRouter do
   use Plug.Router
+  import Plug.Conn
 
   post "/register" do
     %{
@@ -10,20 +11,23 @@ defmodule Neko.UserRouter do
 
     changeset =
       %Neko.Users.User{}
-      |> Ecto.Changeset.cast(
+      |> Neko.Users.User.changeset(
         %{
           username: username,
           email: email,
           password: password
-        },
-        [:username, :email, :password]
+        }
       )
 
-    case Neko.Service.registerUser(changeset) do
+    case Neko.Service.register(changeset) do
       {:ok, user} ->
         conn
         |> put_resp_content_type("application/json")
         |> send_resp(201, Jason.encode!(user))
+      {:error, changeset} ->
+        conn
+        |> put_resp_content_type("application/json")
+        |> send_resp(400, Jason.encode!(changeset))
     end
   end
 end

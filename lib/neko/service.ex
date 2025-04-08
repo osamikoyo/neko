@@ -1,10 +1,13 @@
 defmodule Neko.Service do
-  def register(%Neko.Users.User{} = user) do
-    hashed_user = %Neko.Users.User{
-      user
-      | password: Bcrypt.hash_pwd_salt(user.password)
-    }
-
-    Neko.Repo.insert(hashed_user)
+  alias Neko.Repo
+  def register(%Ecto.Changeset{} = changeset) do
+    changeset
+    |> hash_password()
+    |> Repo.insert()
   end
+
+  defp hash_password(%Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset) do
+    Ecto.Changeset.change(changeset, password_hash: Bcrypt.hash_pwd_salt(password))
+  end
+  defp hash_password(changeset), do: changeset
 end

@@ -5,7 +5,7 @@ defmodule Neko.Chans.Chan do
     field(:foots, :string)
     field(:description, :string)
     field(:archive_name, :string)
-    has_many(:user, Neko.Users.User)
+    belongs_to(:user, Neko.Users.User)
 
     timestamps()
   end
