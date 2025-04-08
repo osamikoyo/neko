@@ -1,5 +1,5 @@
 defmodule Neko.Data.Register do
-  alias Neko.{Repo, Users.User}
+  alias Neko.Repo
 
   def register(%Ecto.Changeset{} = changeset) do
     changeset
