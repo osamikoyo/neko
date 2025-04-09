@@ -5,6 +5,7 @@ defmodule Neko.Data.Login do
     case Repo.get_by(User, email: email) do
       nil ->
         {:error, "User not found"}
+
       user ->
         if Bcrypt.verify_pass(password, user.password) do
           {:ok, user}

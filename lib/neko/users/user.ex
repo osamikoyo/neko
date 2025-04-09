@@ -6,14 +6,13 @@ defmodule Neko.Users.User do
     field :username, :string
     field :email, :string
     field :password, :string, virtual: true
-    field :chan_id, :id
-
     has_many(:chan, Neko.Chans.Chan)
   end
 
   def changeset(user, attrs) do
     user
     |> cast(attrs, [:username, :email, :password])
+    |> cast_assoc(:chan, required: false)  # <- обрабатываем вложенные каналы
     |> validate_required([:username, :email, :password])
     |> validate_length(:password, min: 8)
     |> validate_format(:email, ~r/@/)
